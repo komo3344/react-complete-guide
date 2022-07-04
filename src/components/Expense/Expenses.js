@@ -14,6 +14,19 @@ const Expenses = (props) => {
     return expense.date.getFullYear().toString() === filteredYear;
   });
 
+  let expensesContent = <p>No expenses found</p>;
+
+  if (filterExpenses.length > 0) {
+    expensesContent = filterExpenses.map((expense) => (
+      <ExpenseItem
+        key={expense.id}
+        title={expense.title}
+        amount={expense.amount}
+        date={expense.date}
+      />
+    ));
+  }
+
   return (
     <div>
       <Card className="expenses">
@@ -21,14 +34,32 @@ const Expenses = (props) => {
           selected={filteredYear}
           onChangeFilter={onSaveFilterHandler}
         />
-        {filterExpenses.map((expense) => (
-          <ExpenseItem
-            key={expense.id}
-            title={expense.title}
-            amount={expense.amount}
-            date={expense.date}
-          />
-        ))}
+        {/* 조건부 필터 방법 1 */}
+        {/* {filterExpenses.length === 0 && <p>No expenses found</p>}
+        {filterExpenses.length > 0 &&
+          filterExpenses.map((expense) => (
+            <ExpenseItem
+              key={expense.id}
+              title={expense.title}
+              amount={expense.amount}
+              date={expense.date}
+            />
+          ))} */}
+
+        {/* 조건부 필터 방법 2 */}
+        {/* {filterExpenses.length === 0 ? (
+          <p>No expenses found</p>
+        ) : (
+          filterExpenses.map((expense) => (
+            <ExpenseItem
+              key={expense.id}
+              title={expense.title}
+              amount={expense.amount}
+              date={expense.date}
+            />
+          ))
+        )} */}
+        {expensesContent}
       </Card>
     </div>
   );
